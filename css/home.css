@@ -65,13 +65,13 @@
   align-items: center;
   /* justify-content: center; */
   text-align: center;
-  transition: 300ms;
+  transition: 100ms;
 }
 .fitur .wrapper > a:hover > .icon {
   background-color: lightgray;
 }
 .fitur .wrapper > a > .icon {
-  transition: 300ms;
+  transition: 100ms;
   background: var(--primer);
   color: white;
   padding: 0.375rem;
@@ -81,6 +81,14 @@
 
 /* =============================================================================
 ============================================================================== */
+
+.layanan .card-layanan {
+  transition: 300ms;
+}
+.layanan .card-layanan:hover {
+  background-color: var(--primer) !important;
+  color: white !important;
+}
 
 /* =============================================================================
 ============================================================================== */
