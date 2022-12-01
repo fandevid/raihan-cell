@@ -1,0 +1,22 @@
+:root {
+  --primer: #134982;
+  --sekunder: #00bdc9;
+  --tersier: #ec639e;
+}
+body {
+  /* background: rgb(255, 255, 50); */
+  font-family: "outfit";
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1011;
+}
+.navbar {
+  background: var(--primer);
+  color: white;
+}
+
+.navbar .navbar-brand {
+  color: white;
+}
