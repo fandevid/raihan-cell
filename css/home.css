@@ -84,10 +84,16 @@
 
 .layanan .card-layanan {
   transition: 300ms;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(135deg, lightgray, transparent 100%);
+  border: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 .layanan .card-layanan:hover {
   background-color: var(--primer) !important;
-  color: white !important;
+  background: unset;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
+  color: white;
 }
 
 /* =============================================================================
