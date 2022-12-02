@@ -50,6 +50,9 @@
   grid-template-rows: 1fr 1fr;
   /* grid-auto-columns: 1fr; */
 }
+.fitur .wrapper::-webkit-scrollbar {
+  visibility: hidden;
+}
 
 .fitur .wrapper > a {
   font: inherit;
