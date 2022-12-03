@@ -48,3 +48,15 @@
 .products .product .info .price {
   font-size: smaller;
 }
+/* ====================================================== */
+.offcanvas-detail {
+  border-radius: 1rem 1rem 0 0;
+  height: max-content !important;
+}
+.offcanvas-detail img {
+  width: 100vmin;
+  padding: 2.5vmin;
+  border-radius: 5%;
+}
+.offcanvas-detail .offcanvas-body {
+}

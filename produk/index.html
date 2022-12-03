@@ -52,49 +52,53 @@
       </section>
       <section>
         <div class="container">
-          <div class="products">
-            <div class="product">
-              <img src="../assets/img/sosis-mie.jpeg" alt="" />
-              <div class="info">
-                <h4>Nama Produk</h4>
-                <div class="price">Rp 90.000</div>
-              </div>
-            </div>
-            <div class="product">
-              <img src="../assets/img/sosis-mie.jpeg" alt="" />
-              <div class="info">
-                <h4>Nama Produk</h4>
-                <div class="price">Rp 90.000</div>
-              </div>
-            </div>
-            <div class="product">
-              <img src="../assets/img/sosis-mie.jpeg" alt="" />
-              <div class="info">
-                <h4>Nama Produk</h4>
-                <div class="price">Rp 90.000</div>
-              </div>
-            </div>
-            <div class="product">
-              <img src="../assets/img/sosis-mie.jpeg" alt="" />
-              <div class="info">
-                <h4>Nama Produk</h4>
-                <div class="price">Rp 90.000</div>
-              </div>
-            </div>
-            <div class="product">
-              <img src="../assets/img/sosis-mie.jpeg" alt="" />
-              <div class="info">
-                <h4>Nama Produk</h4>
-                <div class="price">Rp 90.000</div>
-              </div>
-            </div>
-          </div>
+          <div class="products"></div>
         </div>
       </section>
     </main>
 
+    <div class="offcanvas-detail offcanvas offcanvas-bottom" tabindex="-1" id="offcanvas2" aria-labelledby="staticBackdropLabel">
+      <!-- <div class="offcanvas-header">
+        <h5 class="offcanvas-title mb-0" id="staticBackdropLabel">Nama Produk Disini</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div> -->
+      <img src="/assets/img/sosis-mie.jpeg" alt="" />
+      <div class="offcanvas-body">
+        <h5 class="offcanvas-title mb-2" id="staticBackdropLabel">Nama Produk Disini</h5>
+        <div class="text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime voluptate voluptatibus sequi magni saepe quae debitis quasi autem harum placeat.</div>
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-success flex-grow-1"><i class="bx bx-fw bxl-whatsapp"></i>Chat Whatsapp</button>
+          <button class="btn btn-secondary"><i class="bx bx-fw bx-share-alt"></i></button>
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      const offcanvasDetail = new bootstrap.Offcanvas(".offcanvas-detail");
+      function showDetail(product_id) {
+        offcanvasDetail.show();
+      }
+
+      function setProduct() {
+        const productContainer = document.querySelector(".products");
+        for (let i = 0; i < 10; i++) {
+          const elem = document.createElement("div");
+          elem.classList.add("product");
+          elem.onclick = showDetail;
+          elem.innerHTML = `
+            <img src="../assets/img/sosis-mie.jpeg" alt="" />
+            <div class="info">
+              <h4>Nama Produk</h4>
+              <div class="price">Rp 90.000</div>
+              </div>
+          `;
+          productContainer.appendChild(elem);
+        }
+      }
+      setProduct();
+    </script>
   </body>
 </html>
