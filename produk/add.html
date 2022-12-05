@@ -252,7 +252,7 @@
             cancelButtonText: "Keluar",
             confirmButtonText: "Lihat Produk",
           }).then((result) => {
-            if (!result.confirmed) return;
+            if (!result.isConfirmed) return;
             document.location.href = document.location.origin;
           });
         } catch (e) {
