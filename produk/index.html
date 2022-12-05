@@ -103,20 +103,22 @@
       id="offcanvas2"
       aria-labelledby="staticBackdropLabel"
     >
-      <img src="/assets/img/sosis-mie.jpeg" alt="" />
+      <img class="detail-image" />
       <div class="offcanvas-body">
-        <h5 class="offcanvas-title mb-2" id="staticBackdropLabel">
-          Nama Produk Disini
-        </h5>
-        <div class="text-secondary">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime
-          voluptate voluptatibus sequi magni saepe quae debitis quasi autem
-          harum placeat.
-        </div>
+        <h5
+          class="offcanvas-title detail-name mb-2"
+          id="staticBackdropLabel"
+        ></h5>
+        <div>Harga : <strong class="detail-price">-</strong></div>
+        <div>Kategori : <strong class="detail-ctg">-</strong></div>
+        <p class="mt-2 text-secondary detail-desc"></p>
         <div class="d-flex gap-2 mt-3">
-          <button class="btn btn-success flex-grow-1">
+          <a
+            href="//api-whatsapp.com/send?phone=6282323864176"
+            class="btn btn-success flex-grow-1"
+          >
             <i class="bx bx-fw bxl-whatsapp"></i>Chat Whatsapp
-          </button>
+          </a>
           <button class="btn btn-secondary">
             <i class="bx bx-fw bx-share-alt"></i>
           </button>
@@ -134,6 +136,7 @@
       import {
         getFirestore,
         getDocs,
+        getDoc,
         query,
         collection,
         doc,
@@ -158,10 +161,44 @@
       // const storage = getStorage(app);
 
       const offcanvasDetail = new bootstrap.Offcanvas(".offcanvas-detail");
-      function showDetail(product_id) {
+      // If User click the product
+      async function showDetail(e) {
+        const displayName = document.querySelector(
+          ".offcanvas-detail .detail-name"
+        );
+        const displayDesc = document.querySelector(
+          ".offcanvas-detail .detail-desc"
+        );
+        const displayImage = document.querySelector(
+          ".offcanvas-detail .detail-image"
+        );
+        const displayPrice = document.querySelector(
+          ".offcanvas-detail .detail-price"
+        );
+        const displayCtg = document.querySelector(
+          ".offcanvas-detail .detail-ctg"
+        );
+        const product_id = this.getAttribute("data-id");
+
+        // get product from database
+        const result = await getDoc(doc(db, "product", product_id));
+
+        if (!result.exists()) return;
+        const product = result.data();
+        displayName.innerText = product.name ? product.name : "Tanpa Nama";
+        displayDesc.innerText = product.desc
+          ? product.desc
+          : "Tidak ada deskripsi.";
+        displayImage.src = product.image_url
+          ? product.image_url
+          : "/assets/img/no_image.jpg";
+        displayImage.alt = "Foto " + product.name;
+        displayPrice.innerText = `Rp.${product.price ?? "0 (gratiss)"}`;
+        displayCtg.innerText = product.ctg ? product.ctg : "-";
         offcanvasDetail.show();
       }
 
+      // Get product from database than append to product container
       async function setProduct() {
         const productContainer = document.querySelector(".products");
         const products = await getDocs(query(collection(db, "product")));
@@ -179,7 +216,7 @@
                 product.image_url
                   ? product.image_url
                   : "/assets/img/no_image.jpg"
-              }" loading="lazy" alt="Gambar ${product.name}" />
+              }" loading="lazy" alt="Foto ${product.name}" />
               <div class="info">
                 <h4>${product.name ? product.name : "Tanpa Nama"}</h4>
                 <div class="price">Rp ${
