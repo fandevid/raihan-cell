@@ -31,6 +31,7 @@
 .products .product img {
   width: 100%;
   border-radius: 5% 5% 0 0;
+  aspect-ratio: 1/1;
 }
 .products .product .info {
   background-color: var(--primer);
