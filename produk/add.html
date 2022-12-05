@@ -80,7 +80,11 @@
       <section>
         <div class="container">
           <h3 class="text-center mb-3">Tambah Produk</h3>
-          <form name="form_add_product" enctype="multipart/form-data">
+          <form
+            name="form_add_product"
+            autocomplete="off"
+            enctype="multipart/form-data"
+          >
             <div class="form-group mb-3">
               <label class="form-label">Nama Produk</label>
               <input
@@ -139,6 +143,9 @@
                 class="form-control"
                 accept="image/*"
               />
+              <small class="form-control-plaintext"
+                >Dimensi foto 1:1 (kotak)</small
+              >
             </div>
             <button type="submit" class="btn btn-primary my-3">
               Tambahkan
@@ -179,12 +186,6 @@
         uploadBytes,
       } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
 
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
         apiKey: "AIzaSyC9to2YMfRoibY4wZ3wVOqrRQasyh5blnk",
         authDomain: "raihan-cell.firebaseapp.com",
@@ -202,9 +203,6 @@
       const db = getFirestore(app);
       const storage = getStorage(app);
 
-      /*=============================================================================
-          Akhir Authentication
-       ============================================================================= */
       const formAddProduct = document.forms["form_add_product"];
       formAddProduct.onsubmit = handler;
 
@@ -212,9 +210,20 @@
         e.preventDefault();
         const form = new FormData(e.target);
 
-        const filename = `${new Date().getTime()}.${form
-          .get("image")
-          .name.split(".")
+        const image = form.get("image");
+        console.log(image);
+        // Image Validation
+        if (image.size > 1048576) {
+          Swal.fire({
+            icon: "warning",
+            titleText: "Ukuran File Terlalu Besar",
+            showConfirmButton: false,
+          });
+          return;
+        }
+
+        const filename = `${new Date().getTime()}.${image.name
+          .split(".")
           .pop()}`;
 
         const data = {
@@ -222,13 +231,13 @@
           name: form.get("name"),
           desc: form.get("desc"),
           ctg: form.get("ctg"),
-          price: form.get("price"),
+          price: Number(form.get("price")),
           image_url: `https://firebasestorage.googleapis.com/v0/b/raihan-cell.appspot.com/o/product%2F${filename}?alt=media`,
         };
-        console.log(form.get("image"));
+
         // Upload Image File
         const storageRef = ref(storage, "product/" + filename);
-        await uploadBytes(storageRef, form.get("image")).then((snapshot) => {});
+        await uploadBytes(storageRef, image).then((snapshot) => {});
 
         // Add to Firestore Database
         try {
@@ -243,8 +252,7 @@
             cancelButtonText: "Keluar",
             confirmButtonText: "Lihat Produk",
           }).then((result) => {
-            if (!result) return;
-            console.log(result.isConfirmed);
+            if (!result.confirmed) return;
             document.location.href = document.location.origin;
           });
         } catch (e) {
@@ -256,10 +264,6 @@
           // console.error("Error adding document: ", e.errorMessage);
         }
       }
-
-      /*=============================================================================
-          Akhir Authentication
-       ============================================================================= */
     </script>
   </body>
 </html>
